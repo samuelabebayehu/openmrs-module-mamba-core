@@ -380,7 +380,7 @@ function read_config_report_definition_metadata() {
         if [[ "$paginate_flag" == "true" ]]; then
             # For paginated reports, add offset calculation and LIMIT/OFFSET clause
             main_sp_params="$in_parameters_with_pagination"
-            main_sp_body="    
+            main_sp_body="
             DECLARE offset_val INT;
             SET offset_val = (page_number - 1) * page_size;
             -- Original query modified with LIMIT/OFFSET using calculated variable
@@ -388,7 +388,7 @@ function read_config_report_definition_metadata() {
         else
             # For non-paginated reports, use base query and non-pagination params
             main_sp_params="$in_query_parameters"
-            main_sp_body="    
+            main_sp_body="
             -- Original query (non-paginated)
             $sql_query;"
         fi
@@ -412,7 +412,6 @@ ${main_sp_body}
 END //
 
 DELIMITER ;
-
 "
         # --- End Main Report SP ---
 
@@ -920,8 +919,8 @@ then
               sp_body=`cat $WORKING_DIR/$file_path`
               sp_create_statement="
 -- ---------------------------------------------------------------------------------------------
--- ----------------------  $sp_name  ----------------------------
--- ---------------------------------------------------------------------------------------------
+-- $sp_name
+--
 
 $sp_body
 
@@ -929,8 +928,8 @@ $sp_body
         else
             sp_create_statement="
 -- ---------------------------------------------------------------------------------------------
--- ----------------------  $sp_name  ----------------------------
--- ---------------------------------------------------------------------------------------------
+-- $sp_name
+--
 
 DROP PROCEDURE IF EXISTS $sp_name;
 
@@ -988,7 +987,7 @@ DELIMITER ;
 
     ## Automate the Create Analysis Database command at the beginning of the script
     ## create_target_db="CREATE database IF NOT EXISTS $analysis_database;"$'\n~-~-\n' #TODO: This also adds to the create_stored_procedures.sql file -> This needs to be corrected to only add to the liquibase cleaned file
-    create_target_db="CREATE database IF NOT EXISTS mamba_etl_db;"$'\n~-~-\n'
+    create_target_db="CREATE database IF NOT EXISTS mamba_etl_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"$'\n~-~-\n'
 
     ## Add the target database to use at the beginning of the script
     # use_target_db="USE $analysis_database;"$'\n~-~-\n' #TODO: This also adds to the create_stored_procedures.sql file -> This needs to be corrected to only add to the liquibase cleaned file
