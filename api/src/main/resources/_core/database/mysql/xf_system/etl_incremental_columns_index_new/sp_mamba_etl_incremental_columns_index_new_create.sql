@@ -4,8 +4,8 @@
 
 CREATE TEMPORARY TABLE IF NOT EXISTS mamba_etl_incremental_columns_index_new
 (
-    incremental_table_pkey INT NOT NULL UNIQUE PRIMARY KEY
+ incremental_table_pkey INT NOT NULL UNIQUE PRIMARY KEY
 )
-    CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
+ 
 
 -- $END
