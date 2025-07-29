@@ -22,7 +22,7 @@ BEGIN
         concept_id             INT,
         auto_table_column_name VARCHAR(60)
     )
-        CHARSET = UTF8MB4;
+        CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
     TRUNCATE TABLE mamba_dim_concept_temp;
 

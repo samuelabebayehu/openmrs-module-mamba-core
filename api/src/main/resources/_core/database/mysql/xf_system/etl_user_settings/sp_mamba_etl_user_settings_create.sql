@@ -13,6 +13,6 @@ CREATE TABLE _mamba_etl_user_settings
     incremental_mode_switch_cascaded TINYINT(1)   NOT NULL DEFAULT 0 COMMENT 'This is a computed Incremental Mode (1 or 0) for the ETL that is cascaded down to the implementer scripts',
     last_etl_schedule_insert_id      INT          NOT NULL DEFAULT 1 COMMENT 'Insert ID of the last ETL that ran'
 
-) CHARSET = UTF8MB4;
+) CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
 -- $END

@@ -16,6 +16,6 @@ CREATE TABLE IF NOT EXISTS mamba_flat_table_config_incremental
     INDEX mamba_idx_uuid (encounter_type_uuid),
     INDEX mamba_idx_incremental_record (incremental_record)
 )
-    CHARSET = UTF8MB4;
+    CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
 -- $END

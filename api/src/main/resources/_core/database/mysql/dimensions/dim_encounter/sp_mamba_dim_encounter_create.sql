@@ -28,6 +28,6 @@ CREATE TABLE mamba_dim_encounter
     INDEX mamba_idx_voided (voided),
     INDEX mamba_idx_incremental_record (incremental_record)
 )
-    CHARSET = UTF8MB4;
+    CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
 -- $END

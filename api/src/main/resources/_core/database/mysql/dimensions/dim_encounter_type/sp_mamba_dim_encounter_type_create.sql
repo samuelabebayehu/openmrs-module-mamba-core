@@ -22,6 +22,6 @@ CREATE TABLE mamba_dim_encounter_type
     INDEX mamba_idx_auto_flat_table_name (auto_flat_table_name),
     INDEX mamba_idx_incremental_record (incremental_record)
 )
-    CHARSET = UTF8MB4;
+    CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
 -- $END

@@ -8,7 +8,7 @@ DROP PROCEDURE IF EXISTS sp_mamba_flat_table_config_incremental_insert_helper_ma
 DELIMITER //
 
 CREATE PROCEDURE sp_mamba_flat_table_config_incremental_insert_helper_manual(
-    IN report_data MEDIUMTEXT CHARACTER SET UTF8MB4
+    IN report_data MEDIUMTEXT CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci
 )
 BEGIN
 

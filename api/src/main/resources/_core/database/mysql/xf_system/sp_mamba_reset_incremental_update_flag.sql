@@ -6,7 +6,7 @@ DROP PROCEDURE IF EXISTS sp_mamba_reset_incremental_update_flag;
 DELIMITER //
 
 CREATE PROCEDURE sp_mamba_reset_incremental_update_flag(
-    IN table_name VARCHAR(60) CHARACTER SET UTF8MB4
+    IN table_name VARCHAR(60) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci
 )
 BEGIN
 

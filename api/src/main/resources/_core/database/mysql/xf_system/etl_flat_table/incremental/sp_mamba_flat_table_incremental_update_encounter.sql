@@ -5,7 +5,7 @@ DELIMITER //
 CREATE PROCEDURE sp_mamba_flat_table_incremental_update_encounter()
 BEGIN
 
-    DECLARE tbl_name VARCHAR(60) CHARACTER SET UTF8MB4;
+    DECLARE tbl_name VARCHAR(60) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci;
     DECLARE encounter_id INT;
 
     DECLARE done INT DEFAULT FALSE;

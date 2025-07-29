@@ -7,7 +7,7 @@ CREATE PROCEDURE sp_mamba_flat_table_config_incremental_insert_helper_auto()
 main_block:
 BEGIN
 
-    DECLARE encounter_type_name CHAR(50) CHARACTER SET UTF8MB4;
+    DECLARE encounter_type_name CHAR(50) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci;
     DECLARE is_automatic_flattening TINYINT(1);
 
     DECLARE done INT DEFAULT FALSE;

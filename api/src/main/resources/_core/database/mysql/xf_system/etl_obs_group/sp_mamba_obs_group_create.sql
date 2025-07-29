@@ -12,6 +12,6 @@ CREATE TABLE mamba_obs_group
     INDEX mamba_idx_obs_group_concept_id (obs_group_concept_id),
     INDEX mamba_idx_obs_group_concept_name (obs_group_concept_name)
 )
-    CHARSET = UTF8MB4;
+    CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
 -- $END

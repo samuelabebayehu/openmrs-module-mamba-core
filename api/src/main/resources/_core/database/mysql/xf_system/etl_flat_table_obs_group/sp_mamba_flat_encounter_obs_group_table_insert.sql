@@ -3,8 +3,8 @@ DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_obs_group_table_insert;
 DELIMITER //
 
 CREATE PROCEDURE sp_mamba_flat_encounter_obs_group_table_insert(
-    IN flat_encounter_table_name VARCHAR(60) CHARACTER SET UTF8MB4,
-    IN obs_group_concept_name VARCHAR(255) CHARACTER SET UTF8MB4,
+    IN flat_encounter_table_name VARCHAR(60) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci,
+    IN obs_group_concept_name VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci,
     IN encounter_id INT -- Optional parameter for incremental insert
 )
 BEGIN
@@ -45,7 +45,7 @@ END IF;
         INDEX (`concept_answer_obs`),
         INDEX (`flat_table_name`),
         INDEX (`encounter_type_uuid`)
-    ) CHARSET = UTF8MB4;
+    ) CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
 TRUNCATE TABLE `mamba_temp_concept_metadata_group`;
 

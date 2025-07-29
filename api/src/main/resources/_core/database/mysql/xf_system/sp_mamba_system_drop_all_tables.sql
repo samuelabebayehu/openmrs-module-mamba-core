@@ -2,7 +2,7 @@ DROP PROCEDURE IF EXISTS sp_mamba_system_drop_all_tables;
 
 DELIMITER //
 
--- CREATE PROCEDURE sp_mamba_system_drop_all_tables(IN database_name CHAR(255) CHARACTER SET UTF8MB4)
+-- CREATE PROCEDURE sp_mamba_system_drop_all_tables(IN database_name CHAR(255) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci)
 CREATE PROCEDURE sp_mamba_system_drop_all_tables()
 BEGIN
 

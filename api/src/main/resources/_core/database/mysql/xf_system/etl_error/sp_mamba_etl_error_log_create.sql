@@ -9,6 +9,6 @@ CREATE TABLE _mamba_etl_error_log
     sql_state      VARCHAR(5),
     error_time     TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
-    CHARSET = UTF8MB4;
+    CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
 -- $END

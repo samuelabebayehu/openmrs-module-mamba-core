@@ -3,9 +3,9 @@ DROP PROCEDURE IF EXISTS sp_mamba_etl_setup;
 DELIMITER //
 
 CREATE PROCEDURE sp_mamba_etl_setup(
-    IN openmrs_database VARCHAR(256) CHARACTER SET UTF8MB4,
-    IN etl_database VARCHAR(256) CHARACTER SET UTF8MB4,
-    IN concepts_locale CHAR(4) CHARACTER SET UTF8MB4,
+    IN openmrs_database VARCHAR(256) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci,
+    IN etl_database VARCHAR(256) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci,
+    IN concepts_locale CHAR(4) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci,
     IN table_partition_number INT,
     IN incremental_mode_switch TINYINT(1),
     IN automatic_flattening_mode_switch TINYINT(1),

@@ -28,7 +28,7 @@ WHILE mamba_offset < total_records
             INDEX mamba_idx_obs_group_id (obs_group_id),
             INDEX mamba_idx_row_num (row_num)
         )
-        CHARSET = UTF8MB4;
+        CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
         -- Insert into the temporary table based on obs group aggregation
         SET @sql_temp_insert = CONCAT('

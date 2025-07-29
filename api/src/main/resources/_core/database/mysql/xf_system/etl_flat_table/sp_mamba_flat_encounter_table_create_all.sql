@@ -6,7 +6,7 @@ DELIMITER //
 CREATE PROCEDURE sp_mamba_flat_encounter_table_create_all()
 BEGIN
 
-    DECLARE tbl_name VARCHAR(60) CHARACTER SET UTF8MB4;
+    DECLARE tbl_name VARCHAR(60) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci;
 
     DECLARE done INT DEFAULT FALSE;
 

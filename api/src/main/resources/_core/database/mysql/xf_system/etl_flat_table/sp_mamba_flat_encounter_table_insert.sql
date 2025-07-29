@@ -3,7 +3,7 @@ DROP PROCEDURE IF EXISTS sp_mamba_flat_encounter_table_insert;
 DELIMITER //
 
 CREATE PROCEDURE sp_mamba_flat_encounter_table_insert(
-    IN p_flat_table_name VARCHAR(60) CHARACTER SET UTF8MB4,
+    IN p_flat_table_name VARCHAR(60) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci,
     IN p_encounter_id INT -- Optional parameter for incremental insert
 )
 BEGIN
@@ -39,7 +39,7 @@ BEGIN
         INDEX idx_concept_answer_obs (`concept_answer_obs`),
         INDEX idx_flat_table_name (`flat_table_name`),
         INDEX idx_encounter_type_uuid (`encounter_type_uuid`)
-    ) CHARSET = UTF8MB4;
+    ) CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
     -- Populate metadata
     INSERT INTO temp_concept_metadata

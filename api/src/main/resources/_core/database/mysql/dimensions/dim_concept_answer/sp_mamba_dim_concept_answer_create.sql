@@ -12,6 +12,6 @@ CREATE TABLE mamba_dim_concept_answer
     INDEX mamba_idx_concept_id (concept_id),
     INDEX mamba_idx_incremental_record (incremental_record)
 )
-    CHARSET = UTF8MB4;
+    CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
 -- $END

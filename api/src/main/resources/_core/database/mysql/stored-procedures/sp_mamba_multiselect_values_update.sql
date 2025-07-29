@@ -3,10 +3,10 @@ DROP PROCEDURE IF EXISTS `sp_mamba_multiselect_values_update`;
 DELIMITER //
 
 CREATE PROCEDURE `sp_mamba_multiselect_values_update`(
-    IN table_to_update CHAR(100) CHARACTER SET UTF8MB4,
-    IN column_names TEXT CHARACTER SET UTF8MB4,
-    IN value_yes CHAR(100) CHARACTER SET UTF8MB4,
-    IN value_no CHAR(100) CHARACTER SET UTF8MB4
+    IN table_to_update CHAR(100) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci,
+    IN column_names TEXT CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci,
+    IN value_yes CHAR(100) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci,
+    IN value_no CHAR(100) CHARACTER SET UTF8MB4 COLLATE utf8mb4_unicode_ci
 )
 BEGIN
 

@@ -22,7 +22,7 @@ BEGIN
         INDEX mamba_idx_transaction_status (transaction_status),
         INDEX mamba_idx_completion_status (completion_status)
     )
-        CHARSET = UTF8MB4;
+        CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
 END //
 

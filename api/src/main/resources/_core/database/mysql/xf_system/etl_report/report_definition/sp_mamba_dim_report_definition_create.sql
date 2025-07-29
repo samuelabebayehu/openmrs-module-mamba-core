@@ -14,7 +14,7 @@ CREATE TABLE mamba_dim_report_definition
 
     PRIMARY KEY (id)
 )
-    CHARSET = UTF8MB4;
+    CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
 CREATE INDEX mamba_dim_report_definition_report_id_index
     ON mamba_dim_report_definition (report_id);
@@ -31,7 +31,7 @@ CREATE TABLE mamba_dim_report_definition_parameters
     PRIMARY KEY (id),
     FOREIGN KEY (`report_id`) REFERENCES `mamba_dim_report_definition` (`report_id`)
 )
-    CHARSET = UTF8MB4;
+    CHARSET = UTF8MB4 COLLATE = utf8mb4_unicode_ci;
 
 CREATE INDEX mamba_dim_report_definition_parameter_position_index
     ON mamba_dim_report_definition_parameters (parameter_position);
