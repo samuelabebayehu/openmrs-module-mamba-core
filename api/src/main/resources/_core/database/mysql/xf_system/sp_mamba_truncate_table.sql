@@ -7,14 +7,14 @@ CREATE PROCEDURE sp_mamba_truncate_table(
 )
 BEGIN
  IF EXISTS (SELECT 1
-    FROM information_schema.tables
-    WHERE table_schema = DATABASE()
-     AND table_name = table_to_truncate) THEN
+ FROM information_schema.tables
+ WHERE table_schema = DATABASE()
+ AND table_name = table_to_truncate) THEN
 
-  SET @sql = CONCAT('TRUNCATE TABLE ', table_to_truncate);
-  PREPARE stmt FROM @sql;
-  EXECUTE stmt;
-  DEALLOCATE PREPARE stmt;
+ SET @sql = CONCAT('TRUNCATE TABLE ', table_to_truncate);
+ PREPARE stmt FROM @sql;
+ EXECUTE stmt;
+ DEALLOCATE PREPARE stmt;
 
  END IF;
 

@@ -18,29 +18,29 @@ BEGIN
  SET @column_label = '';
 
  REPEAT
-  IF @comma_pos > 0 THEN
-   SET @column_label = substring(@table_columns, @start_pos, @comma_pos - @start_pos);
-   SET @end_loop = 0;
-  ELSE
-   SET @column_label = substring(@table_columns, @start_pos);
-   SET @end_loop = 1;
-  END IF;
+ IF @comma_pos > 0 THEN
+ SET @column_label = substring(@table_columns, @start_pos, @comma_pos - @start_pos);
+ SET @end_loop = 0;
+ ELSE
+ SET @column_label = substring(@table_columns, @start_pos);
+ SET @end_loop = 1;
+ END IF;
 
-  -- UPDATE fact_hts SET @column_label=IF(@column_label IS NULL OR '', new_value_if_false, new_value_if_true);
+ -- UPDATE fact_hts SET @column_label=IF(@column_label IS NULL OR '', new_value_if_false, new_value_if_true);
 
-  SET @update_sql = CONCAT(
-    'UPDATE ', table_to_update, ' SET ', @column_label, '= IF(', @column_label, ' IS NOT NULL, ''',
-    value_yes, ''', ''', value_no, ''');');
-  PREPARE stmt FROM @update_sql;
-  EXECUTE stmt;
-  DEALLOCATE PREPARE stmt;
+ SET @update_sql = CONCAT(
+ 'UPDATE ', table_to_update, ' SET ', @column_label, '= IF(', @column_label, ' IS NOT NULL, ''',
+ value_yes, ''', ''', value_no, ''');');
+ PREPARE stmt FROM @update_sql;
+ EXECUTE stmt;
+ DEALLOCATE PREPARE stmt;
 
-  IF @end_loop = 0 THEN
-   SET @table_columns = substring(@table_columns, @comma_pos + 1);
-   SET @comma_pos = locate(',', @table_columns);
-  END IF;
+ IF @end_loop = 0 THEN
+ SET @table_columns = substring(@table_columns, @comma_pos + 1);
+ SET @comma_pos = locate(',', @table_columns);
+ END IF;
  UNTIL @end_loop = 1
-  END REPEAT;
+ END REPEAT;
 
 END //
 

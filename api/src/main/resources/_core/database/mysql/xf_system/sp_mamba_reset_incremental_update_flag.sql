@@ -13,7 +13,7 @@ BEGIN
  SET @tbl_name = table_name;
 
  SET @update_stmt =
-   CONCAT('UPDATE ', @tbl_name, ' SET incremental_record = 0 WHERE incremental_record = 1');
+ CONCAT('UPDATE ', @tbl_name, ' SET incremental_record = 0 WHERE incremental_record = 1');
  PREPARE updatetb FROM @update_stmt;
  EXECUTE updatetb;
  DEALLOCATE PREPARE updatetb;

@@ -20,7 +20,7 @@ BEGIN
 
  -- If the key is not found, return NULL
  IF key_index = 0 THEN
-  RETURN NULL;
+ RETURN NULL;
  END IF;
 
  -- Set the starting index of the value
@@ -28,22 +28,22 @@ BEGIN
 
  -- Check if the value is a string (starts with a quote)
  IF SUBSTRING(json, start_index, 1) = '"' THEN
-  -- Set the start index to the first character of the value (skipping the quote)
-  SET start_index = start_index + 1;
+ -- Set the start index to the first character of the value (skipping the quote)
+ SET start_index = start_index + 1;
 
-  -- Find the end of the string value (the next quote)
-  SET end_index = LOCATE('"', json, start_index);
-  IF end_index = 0 THEN
-   -- If there's no end quote, the JSON is malformed
-   RETURN NULL;
-  END IF;
+ -- Find the end of the string value (the next quote)
+ SET end_index = LOCATE('"', json, start_index);
+ IF end_index = 0 THEN
+ -- If there's no end quote, the JSON is malformed
+ RETURN NULL;
+ END IF;
  ELSE
-  -- The value is not a string (e.g., a number, boolean, or null)
-  -- Find the end of the value (either a comma or closing brace)
-  SET end_index = LOCATE(',', json, start_index);
-  IF end_index = 0 THEN
-   SET end_index = LOCATE('}', json, start_index);
-  END IF;
+ -- The value is not a string (e.g., a number, boolean, or null)
+ -- Find the end of the value (either a comma or closing brace)
+ SET end_index = LOCATE(',', json, start_index);
+ IF end_index = 0 THEN
+ SET end_index = LOCATE('}', json, start_index);
+ END IF;
  END IF;
 
  -- Calculate the length of the extracted value

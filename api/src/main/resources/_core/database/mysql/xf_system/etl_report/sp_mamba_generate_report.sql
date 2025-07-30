@@ -20,27 +20,27 @@ BEGIN
 
  CREATE TEMPORARY TABLE mamba_dim_temp_mapping
  (
-  column_name  VARCHAR(255),
-  parameter_value VARCHAR(255)
+ column_name VARCHAR(255),
+ parameter_value VARCHAR(255)
 )
-  
+ 
 
  -- SET num_objects = JSON_LENGTH(JSON_EXTRACT(json_arguments, '$.arguments'));
  SET num_objects = JSON_LENGTH(arguments);
 
  WHILE i < num_objects
-  DO
-   -- SET current_json = JSON_EXTRACT(json_arguments, CONCAT('$.arguments[', i, ']'));
-   SET current_json = JSON_EXTRACT(arguments, CONCAT('$[', i, ']'));
+ DO
+ -- SET current_json = JSON_EXTRACT(json_arguments, CONCAT('$.arguments[', i, ']'));
+ SET current_json = JSON_EXTRACT(arguments, CONCAT('$[', i, ']'));
 
-   SET column_name = JSON_UNQUOTE(JSON_EXTRACT(current_json, '$.column'));
-   SET column_value = JSON_UNQUOTE(JSON_EXTRACT(current_json, '$.value'));
+ SET column_name = JSON_UNQUOTE(JSON_EXTRACT(current_json, '$.column'));
+ SET column_value = JSON_UNQUOTE(JSON_EXTRACT(current_json, '$.value'));
 
-   INSERT INTO mamba_dim_temp_mapping (column_name, parameter_value)
-   VALUES (column_name, column_value);
+ INSERT INTO mamba_dim_temp_mapping (column_name, parameter_value)
+ VALUES (column_name, column_value);
 
-   SET i = i + 1;
-  END WHILE;
+ SET i = i + 1;
+ END WHILE;
 
  -- TODO: Read parameters from the table definition provided by the json config - it has the position iD for the variables,
  -- you can use that to put the params in the right positions when calling the SP

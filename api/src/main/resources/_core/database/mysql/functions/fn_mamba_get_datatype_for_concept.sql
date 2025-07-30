@@ -9,26 +9,26 @@ BEGIN
 
 
  IF conceptDatatype = 'Text' THEN
-  SET mysqlDatatype = 'TEXT';
+ SET mysqlDatatype = 'TEXT';
 
  ELSEIF conceptDatatype = 'Coded'
-  OR conceptDatatype = 'N/A' THEN
-  SET mysqlDatatype = 'VARCHAR(250)';
+ OR conceptDatatype = 'N/A' THEN
+ SET mysqlDatatype = 'VARCHAR(250)';
 
  ELSEIF conceptDatatype = 'Boolean' THEN
-  SET mysqlDatatype = 'BOOLEAN';
+ SET mysqlDatatype = 'BOOLEAN';
 
  ELSEIF conceptDatatype = 'Date' THEN
-  SET mysqlDatatype = 'DATE';
+ SET mysqlDatatype = 'DATE';
 
  ELSEIF conceptDatatype = 'Datetime' THEN
-  SET mysqlDatatype = 'DATETIME';
+ SET mysqlDatatype = 'DATETIME';
 
  ELSEIF conceptDatatype = 'Numeric' THEN
-  SET mysqlDatatype = 'DOUBLE';
+ SET mysqlDatatype = 'DOUBLE';
 
  ELSE
-  SET mysqlDatatype = 'TEXT';
+ SET mysqlDatatype = 'TEXT';
 
  END IF;
 

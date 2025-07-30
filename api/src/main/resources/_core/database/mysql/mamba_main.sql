@@ -10,5 +10,5 @@ CALL sp_mamba_etl_setup(?, ?, ?, ?, ?,?,?);
 
 CREATE EVENT IF NOT EXISTS _mamba_etl_scheduler_event
  ON SCHEDULE EVERY ? SECOND
-  STARTS CURRENT_TIMESTAMP
+ STARTS CURRENT_TIMESTAMP
  DO CALL sp_mamba_etl_schedule();

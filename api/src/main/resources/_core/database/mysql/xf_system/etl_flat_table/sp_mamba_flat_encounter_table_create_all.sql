@@ -11,20 +11,20 @@ BEGIN
  DECLARE done INT DEFAULT FALSE;
 
  DECLARE cursor_flat_tables CURSOR FOR
-  SELECT DISTINCT(flat_table_name) FROM mamba_concept_metadata;
+ SELECT DISTINCT(flat_table_name) FROM mamba_concept_metadata;
 
  DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
  OPEN cursor_flat_tables;
  computations_loop:
  LOOP
-  FETCH cursor_flat_tables INTO tbl_name;
+ FETCH cursor_flat_tables INTO tbl_name;
 
-  IF done THEN
-   LEAVE computations_loop;
-  END IF;
+ IF done THEN
+ LEAVE computations_loop;
+ END IF;
 
-  CALL sp_mamba_flat_encounter_table_create(tbl_name);
+ CALL sp_mamba_flat_encounter_table_create(tbl_name);
 
  END LOOP computations_loop;
  CLOSE cursor_flat_tables;

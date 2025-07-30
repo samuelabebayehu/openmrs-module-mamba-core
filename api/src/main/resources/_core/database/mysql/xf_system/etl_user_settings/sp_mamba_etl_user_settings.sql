@@ -18,12 +18,12 @@ BEGIN
  CALL sp_mamba_etl_user_settings_drop();
  CALL sp_mamba_etl_user_settings_create();
  CALL sp_mamba_etl_user_settings_insert(openmrs_database,
-           etl_database,
-           concepts_locale,
-           table_partition_number,
-           incremental_mode_switch,
-           automatic_flattening_mode_switch,
-           etl_interval_seconds);
+ etl_database,
+ concepts_locale,
+ table_partition_number,
+ incremental_mode_switch,
+ automatic_flattening_mode_switch,
+ etl_interval_seconds);
 END //
 
 DELIMITER ;

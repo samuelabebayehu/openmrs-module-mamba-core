@@ -22,35 +22,35 @@ BEGIN
 
  OPEN cursor_flat_tables;
 
-  REPEAT
-   FETCH cursor_flat_tables INTO tbl_name;
-    IF NOT done THEN
-     OPEN cursor_obs_group_tables;
-      block2: BEGIN
-       DECLARE doneobs_name INT DEFAULT 0;
-       DECLARE firstobs_name varchar(255) DEFAULT '';
-       DECLARE i int DEFAULT 1;
-       DECLARE CONTINUE HANDLER FOR NOT FOUND SET doneobs_name = 1;
+ REPEAT
+ FETCH cursor_flat_tables INTO tbl_name;
+ IF NOT done THEN
+ OPEN cursor_obs_group_tables;
+ block2: BEGIN
+ DECLARE doneobs_name INT DEFAULT 0;
+ DECLARE firstobs_name varchar(255) DEFAULT '';
+ DECLARE i int DEFAULT 1;
+ DECLARE CONTINUE HANDLER FOR NOT FOUND SET doneobs_name = 1;
 
-       REPEAT
-        FETCH cursor_obs_group_tables INTO obs_name;
+ REPEAT
+ FETCH cursor_obs_group_tables INTO obs_name;
 
-         IF i = 1 THEN
-          SET firstobs_name = obs_name;
-         END IF;
+ IF i = 1 THEN
+ SET firstobs_name = obs_name;
+ END IF;
 
-         CALL sp_mamba_flat_encounter_obs_group_table_create(tbl_name,obs_name);
-         SET i = i + 1;
+ CALL sp_mamba_flat_encounter_obs_group_table_create(tbl_name,obs_name);
+ SET i = i + 1;
 
-        UNTIL doneobs_name
-       END REPEAT;
+ UNTIL doneobs_name
+ END REPEAT;
 
-       CALL sp_mamba_flat_encounter_obs_group_table_create(tbl_name,firstobs_name);
-      END block2;
-     CLOSE cursor_obs_group_tables;
-    END IF;
-   UNTIL done
-  END REPEAT;
+ CALL sp_mamba_flat_encounter_obs_group_table_create(tbl_name,firstobs_name);
+ END block2;
+ CLOSE cursor_obs_group_tables;
+ END IF;
+ UNTIL done
+ END REPEAT;
  CLOSE cursor_flat_tables;
 
 END //

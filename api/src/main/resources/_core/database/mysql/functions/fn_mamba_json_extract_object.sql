@@ -16,7 +16,7 @@ BEGIN
  -- Find the start position of the key
  SET start_index := LOCATE(key_str, json_string);
  IF start_index = 0 THEN
-  RETURN NULL;
+ RETURN NULL;
  END IF;
 
  -- Adjust start_index to the start of the value
@@ -27,21 +27,21 @@ BEGIN
 
  -- Find the end of the object
  WHILE nested_level >= 0 AND end_index <= CHAR_LENGTH(json_string) DO
-  SET end_index := end_index + 1;
-  SET substring_length := end_index - start_index;
+ SET end_index := end_index + 1;
+ SET substring_length := end_index - start_index;
 
-  -- Check for nested objects
-  IF SUBSTRING(json_string, end_index, 1) = '{' THEN
-   SET nested_level := nested_level + 1;
-  ELSEIF SUBSTRING(json_string, end_index, 1) = '}' THEN
-   SET nested_level := nested_level - 1;
-  END IF;
+ -- Check for nested objects
+ IF SUBSTRING(json_string, end_index, 1) = '{' THEN
+ SET nested_level := nested_level + 1;
+ ELSEIF SUBSTRING(json_string, end_index, 1) = '}' THEN
+ SET nested_level := nested_level - 1;
+ END IF;
  END WHILE;
 
  -- Get the JSON object
  IF nested_level < 0 THEN
  -- We found a matching pair of curly braces
-  SET result := SUBSTRING(json_string, start_index, substring_length);
+ SET result := SUBSTRING(json_string, start_index, substring_length);
  END IF;
 
 RETURN result;

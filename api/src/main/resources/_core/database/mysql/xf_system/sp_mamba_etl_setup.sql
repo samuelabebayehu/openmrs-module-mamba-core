@@ -18,12 +18,12 @@ BEGIN
 
  -- Setup ETL configurations
  CALL sp_mamba_etl_user_settings(openmrs_database,
-         etl_database,
-         concepts_locale,
-         table_partition_number,
-         incremental_mode_switch,
-         automatic_flattening_mode_switch,
-         etl_interval_seconds);
+ etl_database,
+ concepts_locale,
+ table_partition_number,
+ incremental_mode_switch,
+ automatic_flattening_mode_switch,
+ etl_interval_seconds);
 
  -- create ETL schedule log table
  CALL sp_mamba_etl_schedule_table_create();

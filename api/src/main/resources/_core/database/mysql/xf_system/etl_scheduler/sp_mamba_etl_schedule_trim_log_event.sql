@@ -8,12 +8,12 @@ BEGIN
 
  DELETE FROM _mamba_etl_schedule
  WHERE id NOT IN (
-  SELECT id FROM (
-       SELECT id
-       FROM _mamba_etl_schedule
-       ORDER BY id DESC
-       LIMIT 20
-     ) AS recent_records
+ SELECT id FROM (
+ SELECT id
+ FROM _mamba_etl_schedule
+ ORDER BY id DESC
+ LIMIT 20
+) AS recent_records
 );
 
 END //

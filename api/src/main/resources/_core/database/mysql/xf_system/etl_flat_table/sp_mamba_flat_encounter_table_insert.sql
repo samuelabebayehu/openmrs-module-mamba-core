@@ -15,59 +15,59 @@ BEGIN
  -- Handle incremental updates
  IF p_encounter_id IS NOT NULL THEN
 
-  SET @delete_stmt = CONCAT('DELETE FROM `', p_flat_table_name, '` WHERE `encounter_id` = ?');
-  PREPARE stmt FROM @delete_stmt;
-  SET @encounter_id = p_encounter_id; -- Bind the variable
-  EXECUTE stmt USING @encounter_id; -- Use the bound variable
-  DEALLOCATE PREPARE stmt;
+ SET @delete_stmt = CONCAT('DELETE FROM `', p_flat_table_name, '` WHERE `encounter_id` = ?');
+ PREPARE stmt FROM @delete_stmt;
+ SET @encounter_id = p_encounter_id; -- Bind the variable
+ EXECUTE stmt USING @encounter_id; -- Use the bound variable
+ DEALLOCATE PREPARE stmt;
  END IF;
 
  CREATE TEMPORARY TABLE IF NOT EXISTS temp_concept_metadata
  (
-  `id`     INT   NOT NULL,
-  `flat_table_name`  VARCHAR(60) NOT NULL,
-  `encounter_type_uuid` CHAR(38)  NOT NULL,
-  `column_label`  VARCHAR(255) NOT NULL,
-  `concept_uuid`  CHAR(38)  NOT NULL,
-  `obs_value_column` VARCHAR(50),
-  `concept_datatype` VARCHAR(50),
-  `concept_answer_obs` INT,
+ `id` INT NOT NULL,
+ `flat_table_name` VARCHAR(60) NOT NULL,
+ `encounter_type_uuid` CHAR(38) NOT NULL,
+ `column_label` VARCHAR(255) NOT NULL,
+ `concept_uuid` CHAR(38) NOT NULL,
+ `obs_value_column` VARCHAR(50),
+ `concept_datatype` VARCHAR(50),
+ `concept_answer_obs` INT,
 
-  INDEX idx_id (`id`),
-  INDEX idx_column_label (`column_label`),
-  INDEX idx_concept_uuid (`concept_uuid`),
-  INDEX idx_concept_answer_obs (`concept_answer_obs`),
-  INDEX idx_flat_table_name (`flat_table_name`),
-  INDEX idx_encounter_type_uuid (`encounter_type_uuid`)
-) 
+ INDEX idx_id (`id`),
+ INDEX idx_column_label (`column_label`),
+ INDEX idx_concept_uuid (`concept_uuid`),
+ INDEX idx_concept_answer_obs (`concept_answer_obs`),
+ INDEX idx_flat_table_name (`flat_table_name`),
+ INDEX idx_encounter_type_uuid (`encounter_type_uuid`)
+);
 
  -- Populate metadata
  INSERT INTO temp_concept_metadata
  SELECT DISTINCT `id`,
-     `flat_table_name`,
-     `encounter_type_uuid`,
-     `column_label`,
-     `concept_uuid`,
-     fn_mamba_get_obs_value_column(`concept_datatype`),
-     `concept_datatype`,
-     `concept_answer_obs`
+ `flat_table_name`,
+ `encounter_type_uuid`,
+ `column_label`,
+ `concept_uuid`,
+ fn_mamba_get_obs_value_column(`concept_datatype`),
+ `concept_datatype`,
+ `concept_answer_obs`
  FROM `mamba_concept_metadata`
  WHERE `flat_table_name` = p_flat_table_name
-  AND `concept_id` IS NOT NULL
-  AND `concept_datatype` IS NOT NULL;
+ AND `concept_id` IS NOT NULL
+ AND `concept_datatype` IS NOT NULL;
 
  -- Generate dynamic columns
  SELECT GROUP_CONCAT(
-     DISTINCT CONCAT(
-     'MAX(CASE WHEN `column_label` = ''',
-     `column_label`,
-     ''' THEN ',
-     `obs_value_column`,
-     ' END) `',
-     `column_label`,
-     '`'
-      ) ORDER BY `id` ASC
-  )
+ DISTINCT CONCAT(
+ 'MAX(CASE WHEN `column_label` = ''',
+ `column_label`,
+ ''' THEN ',
+ `obs_value_column`,
+ ' END) `',
+ `column_label`,
+ '`'
+) ORDER BY `id` ASC
+)
  INTO @column_labels
  FROM temp_concept_metadata;
 
@@ -78,19 +78,19 @@ BEGIN
 
  IF @column_labels IS NOT NULL THEN
 
-  CALL sp_mamba_flat_encounter_table_question_concepts_insert(
-    p_flat_table_name,
-    p_encounter_id,
-    @encounter_type_uuid,
-    @column_labels
-  );
+ CALL sp_mamba_flat_encounter_table_question_concepts_insert(
+ p_flat_table_name,
+ p_encounter_id,
+ @encounter_type_uuid,
+ @column_labels
+);
 
-  CALL sp_mamba_flat_encounter_table_answer_concepts_insert(
-    p_flat_table_name,
-    p_encounter_id,
-    @encounter_type_uuid,
-    @column_labels
-  );
+ CALL sp_mamba_flat_encounter_table_answer_concepts_insert(
+ p_flat_table_name,
+ p_encounter_id,
+ @encounter_type_uuid,
+ @column_labels
+);
  END IF;
 
 END //

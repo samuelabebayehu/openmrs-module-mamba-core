@@ -13,10 +13,10 @@ BEGIN
  DECLARE pkey_column VARCHAR(255);
 
  DECLARE column_cursor CURSOR FOR
-  SELECT COLUMN_NAME
-  FROM INFORMATION_SCHEMA.COLUMNS
-  WHERE TABLE_SCHEMA = DATABASE()
-   AND TABLE_NAME = 'mamba_etl_incremental_columns_index_all';
+ SELECT COLUMN_NAME
+ FROM INFORMATION_SCHEMA.COLUMNS
+ WHERE TABLE_SCHEMA = DATABASE()
+ AND TABLE_NAME = 'mamba_etl_incremental_columns_index_all';
 
  DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
@@ -25,8 +25,8 @@ BEGIN
  INTO pkey_column
  FROM INFORMATION_SCHEMA.COLUMNS
  WHERE TABLE_SCHEMA = 'mamba_source_db'
-  AND TABLE_NAME = openmrs_table
-  AND COLUMN_KEY = 'PRI'
+ AND TABLE_NAME = openmrs_table
+ AND COLUMN_KEY = 'PRI'
  LIMIT 1;
 
  -- Add the primary key to the select list
@@ -36,20 +36,20 @@ BEGIN
 
  column_loop:
  LOOP
-  FETCH column_cursor INTO incremental_column_name;
-  IF done THEN
-   LEAVE column_loop;
-  END IF;
+ FETCH column_cursor INTO incremental_column_name;
+ IF done THEN
+ LEAVE column_loop;
+ END IF;
 
-  -- Check if the column exists in openmrs_table
-  IF EXISTS (SELECT 1
-     FROM INFORMATION_SCHEMA.COLUMNS
-     WHERE TABLE_SCHEMA = 'mamba_source_db'
-      AND TABLE_NAME = openmrs_table
-      AND COLUMN_NAME = incremental_column_name) THEN
-   SET column_list = CONCAT(column_list, incremental_column_name, ', ');
-   SET select_list = CONCAT(select_list, incremental_column_name, ', ');
-  END IF;
+ -- Check if the column exists in openmrs_table
+ IF EXISTS (SELECT 1
+ FROM INFORMATION_SCHEMA.COLUMNS
+ WHERE TABLE_SCHEMA = 'mamba_source_db'
+ AND TABLE_NAME = openmrs_table
+ AND COLUMN_NAME = incremental_column_name) THEN
+ SET column_list = CONCAT(column_list, incremental_column_name, ', ');
+ SET select_list = CONCAT(select_list, incremental_column_name, ', ');
+ END IF;
  END LOOP column_loop;
 
  CLOSE column_cursor;
@@ -59,9 +59,9 @@ BEGIN
  SET select_list = LEFT(select_list, CHAR_LENGTH(select_list) - 2);
 
  SET @insert_sql = CONCAT(
-   'INSERT INTO mamba_etl_incremental_columns_index_all (', column_list, ') ',
-   'SELECT ', select_list, ' FROM mamba_source_db.', openmrs_table
-    );
+ 'INSERT INTO mamba_etl_incremental_columns_index_all (', column_list, ') ',
+ 'SELECT ', select_list, ' FROM mamba_source_db.', openmrs_table
+);
 
  PREPARE stmt FROM @insert_sql;
  EXECUTE stmt;
