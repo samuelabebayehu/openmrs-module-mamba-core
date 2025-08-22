@@ -995,6 +995,12 @@ SET @source_collation = (SELECT DEFAULT_COLLATION_NAME FROM INFORMATION_SCHEMA.S
 SET @source_charset = IFNULL(@source_charset, 'utf8mb4');
 SET @source_collation = IFNULL(@source_collation, 'utf8mb4_unicode_ci');
 
+-- Set session charset/collation to match source database (prevents collation mismatches with variables)
+SET @set_names_sql = CONCAT('SET NAMES ', @source_charset, ' COLLATE ', @source_collation);
+PREPARE stmt FROM @set_names_sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
 -- Create the ETL database with the same charset and collation as the source
 SET @create_db_sql = CONCAT('CREATE DATABASE IF NOT EXISTS mamba_etl_db CHARACTER SET ', @source_charset, ' COLLATE ', @source_collation);
 PREPARE stmt FROM @create_db_sql;
