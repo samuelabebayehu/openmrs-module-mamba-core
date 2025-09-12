@@ -26,7 +26,7 @@ public class JdbcFlattenDatabaseDao implements FlattenDatabaseDao {
     private static final Logger log = LoggerFactory.getLogger(JdbcFlattenDatabaseDao.class);
 
     private static final String ETL_DEPLOY_SQL = "mamba/jdbc_create_stored_procedures.sql";
-    private static final String MYSQL_COMMENT_REGEX = "--.*(?=\\n)";
+    private static final String MYSQL_COMMENT_REGEX = "--[^\\n]*";
     private static final String DELIMITER = "~-~-";
 
     @Override
@@ -56,8 +56,8 @@ public class JdbcFlattenDatabaseDao implements FlattenDatabaseDao {
 
             try (BufferedReader reader = Files.newBufferedReader(modifiedEtlSqlFile, StandardCharsets.UTF_8)) {
                 String sqlScript = reader.lines()
-                        .collect(Collectors.joining("\n"))
-                        .replaceAll(MYSQL_COMMENT_REGEX, "");
+                        .collect(Collectors.joining("\n"));
+                        //.replaceAll(MYSQL_COMMENT_REGEX, "");
 
                 DataSource dataSource = ConnectionPoolManager
                         .getInstance()
