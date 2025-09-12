@@ -989,22 +989,41 @@ DELIMITER ;
     ## Dynamically get charset and collation from source database to ensure compatibility
     create_target_db="-- Get source database charset and collation, then create ETL database with same settings
 SET @source_charset = (SELECT DEFAULT_CHARACTER_SET_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'mamba_source_db');
+~-~-
+
 SET @source_collation = (SELECT DEFAULT_COLLATION_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'mamba_source_db');
+~-~-
 
 -- Use default charset/collation if source database is not found
 SET @source_charset = IFNULL(@source_charset, 'utf8mb4');
+~-~-
+
 SET @source_collation = IFNULL(@source_collation, 'utf8mb4_unicode_ci');
+~-~-
 
 -- Set session charset/collation to match source database (prevents collation mismatches with variables)
 SET @set_names_sql = CONCAT('SET NAMES ', @source_charset, ' COLLATE ', @source_collation);
+~-~-
+
 PREPARE stmt FROM @set_names_sql;
+~-~-
+
 EXECUTE stmt;
+~-~-
+
 DEALLOCATE PREPARE stmt;
+~-~-
 
 -- Create the ETL database with the same charset and collation as the source
 SET @create_db_sql = CONCAT('CREATE DATABASE IF NOT EXISTS mamba_etl_db CHARACTER SET ', @source_charset, ' COLLATE ', @source_collation);
+~-~-
+
 PREPARE stmt FROM @create_db_sql;
+~-~-
+
 EXECUTE stmt;
+~-~-
+
 DEALLOCATE PREPARE stmt;"$'\n~-~-\n'
 
     ## Add the target database to use at the beginning of the script
