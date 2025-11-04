@@ -28,31 +28,31 @@ BEGIN
                                           FROM performance_schema.events_statements_current
                                           WHERE SQL_TEXT LIKE 'CALL sp_mamba_etl_scheduler_wrapper(%'
                                              OR SQL_TEXT = 'CALL sp_mamba_etl_scheduler_wrapper()');
-    SET incremental_start_time = (SELECT start_time
-                    FROM _mamba_etl_schedule sch
-                    WHERE incremental_start_time IS NOT NULL
-                      AND transaction_status = 'COMPLETED'
-                      AND completion_status = 'SUCCESS'
-                      AND success_or_error_message is null
-                    ORDER BY id DESC
-                    LIMIT 1);
+    SET incremental_start_time = COALESCE((SELECT start_time
+                                           FROM _mamba_etl_schedule sch
+                                           WHERE start_time IS NOT NULL
+                                             AND transaction_status = 'COMPLETED'
+                                             AND completion_status = 'SUCCESS'
+                                             AND success_or_error_message is null
+                                           ORDER BY id DESC
+                                           LIMIT 1),incremental_start_time);
 
     IF running_schedule_record AND no_running_mamba_sp AND NOT error_schedule THEN
-    UPDATE _mamba_etl_schedule
-    SET end_time                 = incremental_start_time,
-        start_time               = incremental_start_time,
-        completion_status        = 'SUCCESS',
-        transaction_status       = 'COMPLETED',
-        success_or_error_message = 'Stuck schedule updated'
-    WHERE id = last_schedule_record_id;
+        UPDATE _mamba_etl_schedule
+        SET end_time                 = incremental_start_time,
+            start_time               = incremental_start_time,
+            completion_status        = 'SUCCESS',
+            transaction_status       = 'COMPLETED',
+            success_or_error_message = 'Stuck schedule updated'
+        WHERE id = last_schedule_record_id;
     ELSEIF error_schedule THEN
-    UPDATE _mamba_etl_schedule
-    SET end_time                 = incremental_start_time,
-        start_time               = incremental_start_time,
-        completion_status        = 'SUCCESS',
-        transaction_status       = 'COMPLETED',
-        success_or_error_message = 'Error schedule updated'
-    WHERE id = last_schedule_record_id;
+        UPDATE _mamba_etl_schedule
+        SET end_time                 = incremental_start_time,
+            start_time               = incremental_start_time,
+            completion_status        = 'SUCCESS',
+            transaction_status       = 'COMPLETED',
+            success_or_error_message = 'Error schedule updated'
+        WHERE id = last_schedule_record_id;
     END IF;
 
 END //
