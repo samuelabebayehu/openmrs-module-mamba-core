@@ -33,8 +33,8 @@ BEGIN
 
  IF etl_is_ready_to_run THEN
 
- SET time_now = NOW();
- SET start_time_seconds = UNIX_TIMESTAMP(time_now);
+ SET time_now = UTC_TIMESTAMP();
+ SET start_time_seconds = TIMESTAMPDIFF(SECOND, '1970-01-01 00:00:00', time_now);
 
  INSERT INTO _mamba_etl_schedule(start_time, transaction_status)
  VALUES (time_now, 'RUNNING');
@@ -50,8 +50,8 @@ BEGIN
  -- Call ETL
  CALL sp_mamba_etl_scheduler_wrapper();
 
- SET txn_end_time = NOW();
- SET end_time_seconds = UNIX_TIMESTAMP(txn_end_time);
+ SET txn_end_time = UTC_TIMESTAMP();
+ SET end_time_seconds = TIMESTAMPDIFF(SECOND, '1970-01-01 00:00:00', txn_end_time);
 
  SET time_taken = (end_time_seconds - start_time_seconds);
 
@@ -62,12 +62,12 @@ BEGIN
  LIMIT 1);
 
  SET next_schedule_seconds = start_time_seconds + interval_seconds + etl_execution_delay_seconds;
- SET next_schedule_time = FROM_UNIXTIME(next_schedule_seconds);
+ SET next_schedule_time = TIMESTAMPADD(SECOND, next_schedule_seconds, '1970-01-01 00:00:00');
 
  -- Run ETL immediately if schedule was missed (give allowance of 1 second)
  IF end_time_seconds > next_schedule_seconds THEN
  SET missed_schedule_seconds = end_time_seconds - next_schedule_seconds;
- SET next_schedule_time = FROM_UNIXTIME(end_time_seconds + 1);
+ SET next_schedule_time = TIMESTAMPADD(SECOND, (end_time_seconds + 1), '1970-01-01 00:00:00');
  END IF;
 
  UPDATE _mamba_etl_schedule
