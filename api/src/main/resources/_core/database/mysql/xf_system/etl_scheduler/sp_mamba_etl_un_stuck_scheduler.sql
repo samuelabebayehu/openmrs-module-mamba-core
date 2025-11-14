@@ -8,7 +8,7 @@ BEGIN
     DECLARE running_schedule_record BOOLEAN DEFAULT FALSE;
     DECLARE no_running_mamba_sp BOOLEAN DEFAULT FALSE;
     DECLARE last_schedule_record_id INT;
-    DECLARE incremental_start_time DATETIME DEFAULT DATE_ADD(NOW());
+    DECLARE incremental_start_time DATETIME DEFAULT NOW();
     DECLARE error_schedule BOOLEAN DEFAULT FALSE;
 
     SET last_schedule_record_id = (SELECT MAX(id) FROM _mamba_etl_schedule limit 1);
