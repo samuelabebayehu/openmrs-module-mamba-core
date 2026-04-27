@@ -13,12 +13,12 @@ BEGIN
     DECLARE batch_start INT;
     DECLARE max_enc_id  INT;
 
-    -- Batch size for the encounter-ID range loop (full-load path).
-    -- Tune with: SET @mamba_flat_table_batch_size = N; before the ETL run.
+    -- Read batch size from persistent settings so it works in the scheduled ETL session.
+    -- Update with: UPDATE _mamba_etl_user_settings SET flat_table_load_batch_size = N;
     --   16 GB RAM + HDD   -> 50000  (reduces lock duration on slow I/O)
     --   16 GB RAM + SSD   -> 200000
     --   >= 32 GB RAM + NVMe -> 500000
-    SET batch_size = IFNULL(@mamba_flat_table_batch_size, 100000);
+    SELECT flat_table_load_batch_size INTO batch_size FROM _mamba_etl_user_settings LIMIT 1;
 
     -- 1 MB headroom for very wide tables (100+ concept columns); 20000 silently truncates SQL.
     SET SESSION group_concat_max_len = 1048576;
