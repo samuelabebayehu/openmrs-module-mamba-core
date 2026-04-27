@@ -17,9 +17,9 @@ public class MambaETLProperties {
 	private final int automated;
 	
 	private final int interval;
-
+	
 	private final int flatTableLoadBatchSize;
-
+	
 	private final String openmrsDbDriver;
 	
 	private final String openmrsDbConnectionUrl;
@@ -85,11 +85,11 @@ public class MambaETLProperties {
 	public int getInterval() {
 		return interval;
 	}
-
+	
 	public int getFlatTableLoadBatchSize() {
 		return flatTableLoadBatchSize;
 	}
-
+	
 	public String getOpenmrsDbDriver() {
 		return openmrsDbDriver;
 	}
