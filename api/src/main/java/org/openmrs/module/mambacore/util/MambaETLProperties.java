@@ -17,7 +17,9 @@ public class MambaETLProperties {
 	private final int automated;
 	
 	private final int interval;
-	
+
+	private final int flatTableLoadBatchSize;
+
 	private final String openmrsDbDriver;
 	
 	private final String openmrsDbConnectionUrl;
@@ -54,6 +56,7 @@ public class MambaETLProperties {
 		this.incremental = getIntProperty(properties, "mambaetl.analysis.incremental_mode", 1);
 		this.automated = getIntProperty(properties, "mambaetl.analysis.automated_flattening", 0);
 		this.interval = getIntProperty(properties, "mambaetl.analysis.etl_interval", 300);
+		this.flatTableLoadBatchSize = getIntProperty(properties, "mambaetl.analysis.flat_table_load_batch_size", 100000);
 	}
 	
 	public static synchronized MambaETLProperties getInstance() {
@@ -82,7 +85,11 @@ public class MambaETLProperties {
 	public int getInterval() {
 		return interval;
 	}
-	
+
+	public int getFlatTableLoadBatchSize() {
+		return flatTableLoadBatchSize;
+	}
+
 	public String getOpenmrsDbDriver() {
 		return openmrsDbDriver;
 	}

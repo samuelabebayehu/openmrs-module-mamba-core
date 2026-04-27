@@ -5,7 +5,7 @@ SET GLOBAL event_scheduler = ON;
 DROP EVENT IF EXISTS _mamba_etl_scheduler_event;
 
 -- Setup ETL Configurations
-CALL sp_mamba_etl_setup(?, ?, ?, ?, ?,?,?);
+CALL sp_mamba_etl_setup(?, ?, ?, ?, ?, ?, ?, ?);
 -- pass them from the runtime properties file
 
 CREATE EVENT IF NOT EXISTS _mamba_etl_scheduler_event
