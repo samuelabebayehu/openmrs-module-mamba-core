@@ -48,7 +48,8 @@ CREATE TABLE mamba_z_encounter_obs
  INDEX mamba_idx_previous_version (previous_version),
  INDEX mamba_idx_obs_group_id (obs_group_id),
  INDEX mamba_idx_incremental_record (incremental_record),
- INDEX idx_encounter_person_datetime (encounter_id, person_id, encounter_datetime)
+ INDEX idx_encounter_person_datetime (encounter_id, person_id, encounter_datetime),
+ INDEX idx_enc_type_enc_id (encounter_type_uuid, encounter_id)
 );
 
 
