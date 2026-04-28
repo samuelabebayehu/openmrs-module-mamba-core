@@ -6,52 +6,45 @@ DELIMITER //
 CREATE PROCEDURE sp_mamba_flat_encounter_obs_group_table_create_all()
 BEGIN
 
- DECLARE tbl_name VARCHAR(60) ;
- DECLARE obs_name CHAR(50) ;
+    DECLARE tbl_name VARCHAR(60);
+    DECLARE obs_name CHAR(50);
+    DECLARE done_tables    INT DEFAULT 0;
+    DECLARE done_obs_names INT DEFAULT 0;
 
- DECLARE done INT DEFAULT 0;
+    DECLARE cursor_flat_tables CURSOR FOR
+        SELECT DISTINCT flat_table_name FROM mamba_concept_metadata;
 
- DECLARE cursor_flat_tables CURSOR FOR
- SELECT DISTINCT(flat_table_name) FROM mamba_concept_metadata;
+    DECLARE cursor_obs_group_tables CURSOR FOR
+        SELECT DISTINCT obs_group_concept_name FROM mamba_obs_group;
 
- DECLARE cursor_obs_group_tables CURSOR FOR
- SELECT DISTINCT(obs_group_concept_name) FROM mamba_obs_group;
+    -- A single NOT FOUND handler covers both cursors; we track exhaustion
+    -- in per-cursor flags so each cursor's loop exits cleanly without running
+    -- the body one extra time on the stale-fetch iteration (the old REPEAT…UNTIL
+    -- bug that caused the first and last obs_group_name to be processed twice).
+    DECLARE CONTINUE HANDLER FOR NOT FOUND
+    BEGIN
+        SET done_tables    = 1;
+        SET done_obs_names = 1;
+    END;
 
- -- DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
- DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+    OPEN cursor_flat_tables;
+    tables_loop: LOOP
+        SET done_tables = 0;
+        FETCH cursor_flat_tables INTO tbl_name;
+        IF done_tables THEN LEAVE tables_loop; END IF;
 
- OPEN cursor_flat_tables;
+        OPEN cursor_obs_group_tables;
+        obs_loop: LOOP
+            SET done_obs_names = 0;
+            FETCH cursor_obs_group_tables INTO obs_name;
+            IF done_obs_names THEN LEAVE obs_loop; END IF;
 
- REPEAT
- FETCH cursor_flat_tables INTO tbl_name;
- IF NOT done THEN
- OPEN cursor_obs_group_tables;
- block2: BEGIN
- DECLARE doneobs_name INT DEFAULT 0;
- DECLARE firstobs_name varchar(255) DEFAULT '';
- DECLARE i int DEFAULT 1;
- DECLARE CONTINUE HANDLER FOR NOT FOUND SET doneobs_name = 1;
+            CALL sp_mamba_flat_encounter_obs_group_table_create(tbl_name, obs_name);
+        END LOOP obs_loop;
+        CLOSE cursor_obs_group_tables;
 
- REPEAT
- FETCH cursor_obs_group_tables INTO obs_name;
-
- IF i = 1 THEN
- SET firstobs_name = obs_name;
- END IF;
-
- CALL sp_mamba_flat_encounter_obs_group_table_create(tbl_name,obs_name);
- SET i = i + 1;
-
- UNTIL doneobs_name
- END REPEAT;
-
- CALL sp_mamba_flat_encounter_obs_group_table_create(tbl_name,firstobs_name);
- END block2;
- CLOSE cursor_obs_group_tables;
- END IF;
- UNTIL done
- END REPEAT;
- CLOSE cursor_flat_tables;
+    END LOOP tables_loop;
+    CLOSE cursor_flat_tables;
 
 END //
 

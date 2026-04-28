@@ -35,13 +35,14 @@ BEGIN
  LEAVE read_loop;
  END IF;
 
- SELECT JSON_EXTRACT(report_json, '$.report_name') INTO @report_name;
- SELECT JSON_EXTRACT(report_json, '$.flat_table_name') INTO @flat_table_name;
- SELECT JSON_EXTRACT(report_json, '$.encounter_type_uuid') INTO @encounter_type;
- SELECT JSON_EXTRACT(report_json, '$.table_columns') INTO @column_array;
+ SELECT JSON_EXTRACT(report_json, '$.report_name'),
+        JSON_EXTRACT(report_json, '$.flat_table_name'),
+        JSON_EXTRACT(report_json, '$.encounter_type_uuid'),
+        JSON_EXTRACT(report_json, '$.table_columns')
+ INTO @report_name, @flat_table_name, @encounter_type, @column_array;
 
- SELECT JSON_KEYS(@column_array) INTO @column_keys_array;
- SELECT JSON_LENGTH(@column_keys_array) INTO @column_keys_array_len;
+ SELECT JSON_KEYS(@column_array), JSON_LENGTH(JSON_KEYS(@column_array))
+ INTO @column_keys_array, @column_keys_array_len;
 
  -- if is_incremental = 1, delete records (if they exist) from mamba_concept_metadata table with encounter_type_uuid = @encounter_type
  IF is_incremental = 1 THEN

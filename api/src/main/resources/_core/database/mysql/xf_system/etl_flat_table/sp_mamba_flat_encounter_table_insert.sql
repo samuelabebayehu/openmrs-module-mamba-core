@@ -29,7 +29,7 @@ BEGIN
 
     DROP TEMPORARY TABLE IF EXISTS temp_concept_metadata;
 
-    CREATE TEMPORARY TABLE IF NOT EXISTS temp_concept_metadata
+    CREATE TEMPORARY TABLE temp_concept_metadata
     (
         `id`                  INT          NOT NULL,
         `flat_table_name`     VARCHAR(60)  NOT NULL,
