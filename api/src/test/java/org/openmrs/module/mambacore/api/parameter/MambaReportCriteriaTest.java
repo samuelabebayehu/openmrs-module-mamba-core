@@ -22,56 +22,54 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertFalse;
 
 public class MambaReportCriteriaTest {
-
-    final String reportId = "total_active_ds_cases";
-    private MambaReportSearchField searchField;
-
-
-    @Before
-    public void setUp() {
-        searchField = new MambaReportSearchField("ptracker_id", "=", "10319A180260", "=");
-    }
-
-    @Test
-    public void defaultConstructor_shouldInitReportIdToNullAndSearchFieldsToEmptyList() {
-        MambaReportCriteria criteria = new MambaReportCriteria();
-        assertNull(criteria.getReportId());
-        assertNotNull(criteria.getSearchFields());
-        assertTrue(criteria.getSearchFields().isEmpty());
-    }
-
-    @Test
-    public void constructorWithReportId_shouldInitReportIdWithValueAndSearchFieldsToEmptyList() {
-
-        MambaReportCriteria criteria = new MambaReportCriteria(reportId);
-        assertEquals(reportId, criteria.getReportId());
-        assertNotNull(criteria.getSearchFields());
-        assertTrue(criteria.getSearchFields().isEmpty());
-    }
-
-    @Test
-    public void testGettersAndSetters() {
-        MambaReportCriteria criteria = new MambaReportCriteria();
-        criteria.setReportId(reportId);
-        assertEquals(reportId, criteria.getReportId());
-
-        criteria.getSearchFields().add(searchField);
-        assertFalse(criteria.getSearchFields().isEmpty());
-        assertEquals(1, criteria.getSearchFields().size());
-        assertEquals(searchField, criteria.getSearchFields().get(0));
-    }
-
-    @Test
-    public void testGetAndSetSearchFields() {
-        List<MambaReportSearchField> searchFields = Arrays.asList(
-                new MambaReportSearchField("field1", "value1"),
-                new MambaReportSearchField("field2", "value2")
-        );
-
-        MambaReportCriteria criteria = new MambaReportCriteria();
-        criteria.setSearchFields(searchFields);
-
-        assertNotNull(criteria.getSearchFields());
-        assertEquals(searchFields, criteria.getSearchFields());
-    }
+	
+	final String reportId = "total_active_ds_cases";
+	
+	private MambaReportSearchField searchField;
+	
+	@Before
+	public void setUp() {
+		searchField = new MambaReportSearchField("ptracker_id", "=", "10319A180260", "=");
+	}
+	
+	@Test
+	public void defaultConstructor_shouldInitReportIdToNullAndSearchFieldsToEmptyList() {
+		MambaReportCriteria criteria = new MambaReportCriteria();
+		assertNull(criteria.getReportId());
+		assertNotNull(criteria.getSearchFields());
+		assertTrue(criteria.getSearchFields().isEmpty());
+	}
+	
+	@Test
+	public void constructorWithReportId_shouldInitReportIdWithValueAndSearchFieldsToEmptyList() {
+		
+		MambaReportCriteria criteria = new MambaReportCriteria(reportId);
+		assertEquals(reportId, criteria.getReportId());
+		assertNotNull(criteria.getSearchFields());
+		assertTrue(criteria.getSearchFields().isEmpty());
+	}
+	
+	@Test
+	public void testGettersAndSetters() {
+		MambaReportCriteria criteria = new MambaReportCriteria();
+		criteria.setReportId(reportId);
+		assertEquals(reportId, criteria.getReportId());
+		
+		criteria.getSearchFields().add(searchField);
+		assertFalse(criteria.getSearchFields().isEmpty());
+		assertEquals(1, criteria.getSearchFields().size());
+		assertEquals(searchField, criteria.getSearchFields().get(0));
+	}
+	
+	@Test
+	public void testGetAndSetSearchFields() {
+		List<MambaReportSearchField> searchFields = Arrays.asList(new MambaReportSearchField("field1", "value1"),
+		    new MambaReportSearchField("field2", "value2"));
+		
+		MambaReportCriteria criteria = new MambaReportCriteria();
+		criteria.setSearchFields(searchFields);
+		
+		assertNotNull(criteria.getSearchFields());
+		assertEquals(searchFields, criteria.getSearchFields());
+	}
 }

@@ -22,23 +22,25 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class JdbcFlattenDatabaseDao implements FlattenDatabaseDao {
-
-    private static final Logger log = LoggerFactory.getLogger(JdbcFlattenDatabaseDao.class);
-
-    private static final String ETL_DEPLOY_SQL = "mamba/jdbc_create_stored_procedures.sql";
-    private static final String MYSQL_COMMENT_REGEX = "--[^\\n]*";
-    private static final String DELIMITER = "~-~-";
-
-    @Override
-    public void deployMambaEtl() {
-
-        MambaETLProperties props = MambaETLProperties.getInstance();
-        log.info("Deploying MambaETL, scheduled @interval: " + props.getInterval() + " seconds...");
-        executeSqlScript(props);
-        log.info("Done deploying MambaETL...");
-    }
-
-    private void executeSqlScript(MambaETLProperties props) {
+	
+	private static final Logger log = LoggerFactory.getLogger(JdbcFlattenDatabaseDao.class);
+	
+	private static final String ETL_DEPLOY_SQL = "mamba/jdbc_create_stored_procedures.sql";
+	
+	private static final String MYSQL_COMMENT_REGEX = "--[^\\n]*";
+	
+	private static final String DELIMITER = "~-~-";
+	
+	@Override
+	public void deployMambaEtl() {
+		
+		MambaETLProperties props = MambaETLProperties.getInstance();
+		log.info("Deploying MambaETL, scheduled @interval: " + props.getInterval() + " seconds...");
+		executeSqlScript(props);
+		log.info("Done deploying MambaETL...");
+	}
+	
+	private void executeSqlScript(MambaETLProperties props) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
         try (InputStream stream = classLoader.getResourceAsStream(ETL_DEPLOY_SQL)) {
@@ -77,8 +79,8 @@ public class JdbcFlattenDatabaseDao implements FlattenDatabaseDao {
             log.error("IOException while reading script", e);
         }
     }
-
-    private void executeStatements(Connection connection, String sqlScript, MambaETLProperties props) throws SQLException {
+	
+	private void executeStatements(Connection connection, String sqlScript, MambaETLProperties props) throws SQLException {
 
         String[] sqlStatements = sqlScript.split(DELIMITER);
 

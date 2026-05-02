@@ -19,25 +19,24 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-
 public class MambaReportItemTest {
-
-    private MambaReportItem mambaReportItem;
-
-    @Before
-    public void setup() {
-        mambaReportItem = new MambaReportItem();
-    }
-
-    @Test
-    public void testSetAndGetSerialId() {
-        Integer serialId = 5;
-        mambaReportItem.setSerialId(serialId);
-
-        assertEquals(serialId, mambaReportItem.getSerialId());
-    }
-
-    @Test
+	
+	private MambaReportItem mambaReportItem;
+	
+	@Before
+	public void setup() {
+		mambaReportItem = new MambaReportItem();
+	}
+	
+	@Test
+	public void testSetAndGetSerialId() {
+		Integer serialId = 5;
+		mambaReportItem.setSerialId(serialId);
+		
+		assertEquals(serialId, mambaReportItem.getSerialId());
+	}
+	
+	@Test
     public void testSetAndGetRecord() {
         MambaReportItemColumn column1 = new MambaReportItemColumn("total_deliveries", "1");
 
@@ -48,10 +47,10 @@ public class MambaReportItemTest {
 
         assertEquals(record, mambaReportItem.getRecord());
     }
-
-    @Test
-    public void testDefaultConstructor() {
-        assertNotNull(mambaReportItem.getRecord());
-        assertTrue(mambaReportItem.getRecord().isEmpty());
-    }
+	
+	@Test
+	public void testDefaultConstructor() {
+		assertNotNull(mambaReportItem.getRecord());
+		assertTrue(mambaReportItem.getRecord().isEmpty());
+	}
 }

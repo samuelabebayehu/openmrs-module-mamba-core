@@ -17,10 +17,10 @@ import java.nio.file.Path;
 import java.util.Map;
 
 public class StringReplacerUtil {
-
-    private static final Logger log = LoggerFactory.getLogger(StringReplacerUtil.class);
-
-    public static Path replaceStrings(InputStream inputStream, Map<String, String> replacements) throws IOException {
+	
+	private static final Logger log = LoggerFactory.getLogger(StringReplacerUtil.class);
+	
+	public static Path replaceStrings(InputStream inputStream, Map<String, String> replacements) throws IOException {
         Path tempFile = Files.createTempFile("mamba_jdbc_create_stored_procedures", ".sql");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));

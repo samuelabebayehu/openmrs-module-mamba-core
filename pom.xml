@@ -133,6 +133,20 @@
             <type>test-jar</type>
             <version>${openmrsPlatformVersion}</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.powermock</groupId>
+                    <artifactId>powermock-module-junit4</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.powermock</groupId>
+                    <artifactId>powermock-api-mockito</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.powermock</groupId>
+                    <artifactId>powermock-api-mockito2</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -141,6 +155,20 @@
             <version>${openmrsPlatformVersion}</version>
             <classifier>tests</classifier>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.powermock</groupId>
+                    <artifactId>powermock-module-junit4</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.powermock</groupId>
+                    <artifactId>powermock-api-mockito</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.powermock</groupId>
+                    <artifactId>powermock-api-mockito2</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -153,6 +181,10 @@
                 <exclusion>
                     <groupId>org.powermock</groupId>
                     <artifactId>powermock-module-junit4</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.powermock</groupId>
+                    <artifactId>powermock-api-mockito</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.powermock</groupId>
@@ -178,14 +210,12 @@
     </pluginRepositories>
 
     <properties>
-        <version.java>8</version.java>
-        <maven.compiler.java.release>${version.java}</maven.compiler.java.release>
-        <maven.compiler.source>${version.java}</maven.compiler.source>
-        <maven.compiler.target>${version.java}</maven.compiler.target>
+        <version.java>21</version.java>
+        <maven.compiler.release>${version.java}</maven.compiler.release>
         <maven.release.plugin>3.0.0-M6</maven.release.plugin>
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
-        <version.maven-surefire-plugin>3.0.0-M7</version.maven-surefire-plugin>
+        <version.maven-surefire-plugin>3.2.5</version.maven-surefire-plugin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit5Version>5.7.2</junit5Version>
         <junit4Version>4.13.1</junit4Version>
@@ -241,8 +271,7 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
-                        <source>${maven.compiler.source}</source>
-                        <target>${maven.compiler.target}</target>
+                        <release>${maven.compiler.release}</release>
                     </configuration>
                 </plugin>
                 <plugin>

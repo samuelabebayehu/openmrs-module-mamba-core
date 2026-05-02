@@ -27,66 +27,67 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 public class JdbcMambaReportItemDaoTest {
-
-    @Mock
-    MambaReportItemDao mambaReportItemDao;
-
-    @Mock
-    private DataSource dataSource;
-
-    @Mock
-    private Connection connection;
-
-    @Mock
-    private CallableStatement callableStatementColumnNames;
-
-    @Mock
-    private CallableStatement callableStatementGenerateReport;
-
-    @Mock
-    private ResultSet resultSetColumnNames;
-
-    @Mock
-    private ResultSet resultSetReport;
-
-    @Mock
-    private ResultSetMetaData metaData;
-
-    final String reportId = "total_deliveries";
-
-    @Before
-    public void setUp() throws Exception {
-
-        MockitoAnnotations.initMocks(this);
-
-        when(dataSource.getConnection()).thenReturn(connection);
-
-        when(connection.prepareCall("{CALL sp_mamba_get_report_column_names(?)}")).thenReturn(callableStatementColumnNames);
-        when(connection.prepareCall("{CALL sp_mamba_generate_report_wrapper(?, ?, ?)}")).thenReturn(callableStatementGenerateReport);
-
-        when(callableStatementColumnNames.execute()).thenReturn(true);
-        when(callableStatementColumnNames.getResultSet()).thenReturn(resultSetColumnNames);
-        when(resultSetColumnNames.next()).thenReturn(true, false);
-        when(resultSetColumnNames.getString(1)).thenReturn("total_deliveries");
-
-        when(callableStatementGenerateReport.execute()).thenReturn(true);
-        when(callableStatementGenerateReport.getResultSet()).thenReturn(resultSetReport);
-
-        when(resultSetReport.getMetaData()).thenReturn(metaData);
-        when(metaData.getColumnCount()).thenReturn(1);
-        when(metaData.getColumnName(1)).thenReturn("total_deliveries");
-
-        when(resultSetReport.getString(1)).thenReturn("32");
-    }
-
-    @Test
-    public void mambaReportItemShouldNotBeNull() {
-        Assert.assertNotNull(mambaReportItemDao);
-    }
-
-    @Test
-    public void getMambaReport_shouldReturnEmptyList() {
-        List<MambaReportItem> mambaReportItems = mambaReportItemDao.getMambaReport("total_deliveries");
-        Assert.assertNotNull(mambaReportItems);
-    }
+	
+	@Mock
+	MambaReportItemDao mambaReportItemDao;
+	
+	@Mock
+	private DataSource dataSource;
+	
+	@Mock
+	private Connection connection;
+	
+	@Mock
+	private CallableStatement callableStatementColumnNames;
+	
+	@Mock
+	private CallableStatement callableStatementGenerateReport;
+	
+	@Mock
+	private ResultSet resultSetColumnNames;
+	
+	@Mock
+	private ResultSet resultSetReport;
+	
+	@Mock
+	private ResultSetMetaData metaData;
+	
+	final String reportId = "total_deliveries";
+	
+	@Before
+	public void setUp() throws Exception {
+		
+		MockitoAnnotations.initMocks(this);
+		
+		when(dataSource.getConnection()).thenReturn(connection);
+		
+		when(connection.prepareCall("{CALL sp_mamba_get_report_column_names(?)}")).thenReturn(callableStatementColumnNames);
+		when(connection.prepareCall("{CALL sp_mamba_generate_report_wrapper(?, ?, ?)}")).thenReturn(
+		    callableStatementGenerateReport);
+		
+		when(callableStatementColumnNames.execute()).thenReturn(true);
+		when(callableStatementColumnNames.getResultSet()).thenReturn(resultSetColumnNames);
+		when(resultSetColumnNames.next()).thenReturn(true, false);
+		when(resultSetColumnNames.getString(1)).thenReturn("total_deliveries");
+		
+		when(callableStatementGenerateReport.execute()).thenReturn(true);
+		when(callableStatementGenerateReport.getResultSet()).thenReturn(resultSetReport);
+		
+		when(resultSetReport.getMetaData()).thenReturn(metaData);
+		when(metaData.getColumnCount()).thenReturn(1);
+		when(metaData.getColumnName(1)).thenReturn("total_deliveries");
+		
+		when(resultSetReport.getString(1)).thenReturn("32");
+	}
+	
+	@Test
+	public void mambaReportItemShouldNotBeNull() {
+		Assert.assertNotNull(mambaReportItemDao);
+	}
+	
+	@Test
+	public void getMambaReport_shouldReturnEmptyList() {
+		List<MambaReportItem> mambaReportItems = mambaReportItemDao.getMambaReport("total_deliveries");
+		Assert.assertNotNull(mambaReportItems);
+	}
 }

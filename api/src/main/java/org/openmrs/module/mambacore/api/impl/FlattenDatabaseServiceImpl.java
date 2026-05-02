@@ -23,17 +23,18 @@ import java.util.concurrent.TimeUnit;
 
 @Transactional
 public class FlattenDatabaseServiceImpl extends BaseOpenmrsService implements FlattenDatabaseService {
-
-    private static final Logger log = LoggerFactory.getLogger(FlattenDatabaseServiceImpl.class);
-
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-    private FlattenDatabaseDao dao;
-
-    public void setDao(FlattenDatabaseDao dao) {
-        this.dao = dao;
-    }
-
-    @Override
+	
+	private static final Logger log = LoggerFactory.getLogger(FlattenDatabaseServiceImpl.class);
+	
+	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+	
+	private FlattenDatabaseDao dao;
+	
+	public void setDao(FlattenDatabaseDao dao) {
+		this.dao = dao;
+	}
+	
+	@Override
     public void setupEtl() {
         executorService.submit(() -> {
             try {
@@ -43,22 +44,22 @@ public class FlattenDatabaseServiceImpl extends BaseOpenmrsService implements Fl
             }
         });
     }
-
-
-    @Override
-    @PreDestroy
-    public void shutdownEtlThread() {
-        executorService.shutdown();
-        try {
-            if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
-                executorService.shutdownNow();
-                if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
-                    log.error("ExecutorService did not terminate");
-                }
-            }
-        } catch (InterruptedException e) {
-            executorService.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
-    }
+	
+	@Override
+	@PreDestroy
+	public void shutdownEtlThread() {
+		executorService.shutdown();
+		try {
+			if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+				executorService.shutdownNow();
+				if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+					log.error("ExecutorService did not terminate");
+				}
+			}
+		}
+		catch (InterruptedException e) {
+			executorService.shutdownNow();
+			Thread.currentThread().interrupt();
+		}
+	}
 }

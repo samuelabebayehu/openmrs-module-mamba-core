@@ -15,19 +15,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class MambaReportsConstantsTest {
-
-    @Test
-    public void testViewMambaReportConstant() {
-        assertEquals("View MambaReport", MambaReportsConstants.VIEW_MAMBA_REPORT);
-    }
-
-    @Test
-    public void testConstantIsNotNull() {
-        assertNotNull(MambaReportsConstants.VIEW_MAMBA_REPORT);
-    }
-
-    @Test
-    public void testConstantIsNotChangedAccidentally() {
-        assertEquals("View MambaReport", MambaReportsConstants.VIEW_MAMBA_REPORT);
-    }
+	
+	@Test
+	public void testViewMambaReportConstant() {
+		assertEquals("View MambaReport", MambaReportsConstants.VIEW_MAMBA_REPORT);
+	}
+	
+	@Test
+	public void testConstantIsNotNull() {
+		assertNotNull(MambaReportsConstants.VIEW_MAMBA_REPORT);
+	}
+	
+	@Test
+	public void testConstantIsNotChangedAccidentally() {
+		assertEquals("View MambaReport", MambaReportsConstants.VIEW_MAMBA_REPORT);
+	}
 }

@@ -25,15 +25,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcMambaReportItemDao implements MambaReportItemDao {
-
-    private static final Logger log = LoggerFactory.getLogger(JdbcMambaReportItemDao.class);
-
-    @Override
-    public List<MambaReportItem> getMambaReport(String mambaReportId) {
-        return getMambaReport(new MambaReportCriteria(mambaReportId));
-    }
-
-    @Override
+	
+	private static final Logger log = LoggerFactory.getLogger(JdbcMambaReportItemDao.class);
+	
+	@Override
+	public List<MambaReportItem> getMambaReport(String mambaReportId) {
+		return getMambaReport(new MambaReportCriteria(mambaReportId));
+	}
+	
+	@Override
     public List<MambaReportItem> getMambaReport(MambaReportCriteria criteria) {
 
         Integer pageNumber = criteria.getPageNumber();
@@ -132,8 +132,8 @@ public class JdbcMambaReportItemDao implements MambaReportItemDao {
         }
         return mambaReportItems;
     }
-
-    @Override
+	
+	@Override
     public Integer getMambaReportSize(MambaReportCriteria criteria) {
         String argumentsJson = "";
         try {

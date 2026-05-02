@@ -20,27 +20,25 @@ import java.util.List;
  * This interface defines an API of interacting with {@link MambaReportItem} objects
  */
 public interface MambaReportService extends OpenmrsService {
-
-    /**
-     * Gets MambaReport by id
-     *
-     * @param mambaReportId the MambaReport id
-     * @return the MambaReport with given report id, or null if none exists
-     */
-    @Authorized({MambaReportsConstants.VIEW_MAMBA_REPORT})
-    List<MambaReportItem> getMambaReport(String mambaReportId);
-
-
-    /**
-     * Gets all MambaReport results that match the given criteria
-     *
-     * @param criteria - the criteria for the returned MambaReport results
-     * @return a list of MambaReport
-     */
-    @Authorized({MambaReportsConstants.VIEW_MAMBA_REPORT})
-    List<MambaReportItem> getMambaReportByCriteria(MambaReportCriteria criteria);
-
-
-    @Authorized({MambaReportsConstants.VIEW_MAMBA_REPORT})
-    Integer getMambaReportSize(MambaReportCriteria criteria);
+	
+	/**
+	 * Gets MambaReport by id
+	 * 
+	 * @param mambaReportId the MambaReport id
+	 * @return the MambaReport with given report id, or null if none exists
+	 */
+	@Authorized({ MambaReportsConstants.VIEW_MAMBA_REPORT })
+	List<MambaReportItem> getMambaReport(String mambaReportId);
+	
+	/**
+	 * Gets all MambaReport results that match the given criteria
+	 * 
+	 * @param criteria - the criteria for the returned MambaReport results
+	 * @return a list of MambaReport
+	 */
+	@Authorized({ MambaReportsConstants.VIEW_MAMBA_REPORT })
+	List<MambaReportItem> getMambaReportByCriteria(MambaReportCriteria criteria);
+	
+	@Authorized({ MambaReportsConstants.VIEW_MAMBA_REPORT })
+	Integer getMambaReportSize(MambaReportCriteria criteria);
 }

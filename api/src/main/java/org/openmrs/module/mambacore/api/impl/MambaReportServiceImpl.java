@@ -20,25 +20,25 @@ import java.util.List;
 
 @Transactional
 public class MambaReportServiceImpl extends BaseOpenmrsService implements MambaReportService {
-
-    private MambaReportItemDao dao;
-
-     public void setDao(MambaReportItemDao dao) {
-        this.dao = dao;
-    }
-
-    @Override
-    public List<MambaReportItem>  getMambaReport(String mambaReportId) {
-        return dao.getMambaReport(mambaReportId);
-    }
-
-    @Override
-    public List<MambaReportItem> getMambaReportByCriteria(MambaReportCriteria criteria) {
-        return dao.getMambaReport(criteria);
-    }
-
-    @Override
-    public Integer getMambaReportSize(MambaReportCriteria criteria) {
-        return dao.getMambaReportSize(criteria);
-    }
+	
+	private MambaReportItemDao dao;
+	
+	public void setDao(MambaReportItemDao dao) {
+		this.dao = dao;
+	}
+	
+	@Override
+	public List<MambaReportItem> getMambaReport(String mambaReportId) {
+		return dao.getMambaReport(mambaReportId);
+	}
+	
+	@Override
+	public List<MambaReportItem> getMambaReportByCriteria(MambaReportCriteria criteria) {
+		return dao.getMambaReport(criteria);
+	}
+	
+	@Override
+	public Integer getMambaReportSize(MambaReportCriteria criteria) {
+		return dao.getMambaReportSize(criteria);
+	}
 }

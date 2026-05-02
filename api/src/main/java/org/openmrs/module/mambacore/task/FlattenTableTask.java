@@ -16,32 +16,34 @@ import org.openmrs.module.mambacore.api.FlattenDatabaseService;
 import org.openmrs.scheduler.tasks.AbstractTask;
 
 public class FlattenTableTask extends AbstractTask {
-
-    private final static Logger log = LoggerFactory.getLogger(FlattenTableTask.class);
-
-    @Override
-    public void execute() {
-
-        log.info("MambaETL FlattenTableTask (will execute shortly if not already running)...");
-        if (!isExecuting) {
-
-            log.info("MambaETL FlattenTableTask executing..");
-            startExecuting();
-
-            try {
-                // getService().setupEtl(); TODO: Delete this Task as we no longer use it
-            } catch (Exception e) {
-                log.error("Error while running MambaETL FlattenTableTask: ", e);
-            } finally {
-                stopExecuting();
-                log.info("MambaETL FlattenTableTask completed & stopped...");
-            }
-        } else {
-            log.warn("Warning, an instance of MambaETL Flattening Task is still running, try again after");
-        }
-    }
-
-    private FlattenDatabaseService getService() {
-        return Context.getService(FlattenDatabaseService.class);
-    }
+	
+	private final static Logger log = LoggerFactory.getLogger(FlattenTableTask.class);
+	
+	@Override
+	public void execute() {
+		
+		log.info("MambaETL FlattenTableTask (will execute shortly if not already running)...");
+		if (!isExecuting) {
+			
+			log.info("MambaETL FlattenTableTask executing..");
+			startExecuting();
+			
+			try {
+				// getService().setupEtl(); TODO: Delete this Task as we no longer use it
+			}
+			catch (Exception e) {
+				log.error("Error while running MambaETL FlattenTableTask: ", e);
+			}
+			finally {
+				stopExecuting();
+				log.info("MambaETL FlattenTableTask completed & stopped...");
+			}
+		} else {
+			log.warn("Warning, an instance of MambaETL Flattening Task is still running, try again after");
+		}
+	}
+	
+	private FlattenDatabaseService getService() {
+		return Context.getService(FlattenDatabaseService.class);
+	}
 }
